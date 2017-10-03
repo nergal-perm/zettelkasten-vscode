@@ -21,6 +21,16 @@ function activate(context) {
     });
 
     context.subscriptions.push(disposable);
+
+    return {
+        extendMarkdownIt(md) {
+            return md.use(require('markdown-it-sub'))
+                .use(require('markdown-it-sup'))
+                .use(require('markdown-it-container'), "tags")
+                .use(require('markdown-it-footnote'))
+                .use(require('markdown-it-katex'));
+        }
+    }
 }
 exports.activate = activate;
 
