@@ -11,16 +11,11 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.sayHello"
+    "onCommand:extension.sayHello",
+    "onLanguage:markdown"
   ],
   "main": "./extension",
   "contributes": {
-    "commands": [
-      {
-        "command": "extension.sayHello",
-        "title": "Hello World"
-      }
-    ],
     "markdown.previewStyles": [
       "./katex.min.css",
       "./mystyles.css"
