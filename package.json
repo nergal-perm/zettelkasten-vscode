@@ -1,7 +1,7 @@
 {
-  "name": "hello-world",
-  "displayName": "hello-world",
-  "description": "Some tutorial to learn extensions basics",
+  "name": "zettelkasten",
+  "displayName": "Zettelkasten",
+  "description": "Core Zettelkasten methods adapted for Visual Studio Code and Markdown",
   "version": "0.0.1",
   "publisher": "nergal-perm",
   "engines": {
@@ -11,7 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.sayHello",
+    "onCommand:extension.newZettelLink",
     "onLanguage:markdown"
   ],
   "main": "./extension",
@@ -20,7 +20,20 @@
       "./katex.min.css",
       "./mystyles.css"
     ],
-    "markdown.markdownItPlugins": true
+    "markdown.markdownItPlugins": true,
+    "commands": [
+      {
+          "command": "extension.newZettelLink",
+          "title": "New Zettel link"
+      }
+  ],
+  "keybindings": [
+      {
+          "command": "extension.newZettelLink",
+          "key": "ctrl+shift+=",
+          "mac": "ctrl+shift+="
+      }
+  ]    
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
