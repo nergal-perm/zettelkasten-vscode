@@ -10,15 +10,16 @@
   "categories": [
     "Other"
   ],
+  "icon": "card-file-icon.png",
   "activationEvents": [
     "onCommand:extension.newZettelLink",
     "onLanguage:markdown"
   ],
-  "main": "./extension",
+  "main": "./src/extension",
   "contributes": {
     "markdown.previewStyles": [
-      "./katex.min.css",
-      "./mystyles.css"
+      "./resources/katex.min.css",
+      "./resources/mystyles.css"
     ],
     "markdown.markdownItPlugins": true,
     "commands": [
