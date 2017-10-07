@@ -2,15 +2,17 @@
   "name": "zettelkasten",
   "displayName": "Zettelkasten",
   "description": "Core Zettelkasten methods adapted for Visual Studio Code and Markdown",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "publisher": "nergal-perm",
+  "license": "MIT",
+  "repository": "https://github.com/nergal-perm/zettelkasten-vscode",
   "engines": {
     "vscode": "^1.16.0"
   },
   "categories": [
     "Other"
   ],
-  "icon": "card-file-icon.png",
+  "icon": "icon.png",
   "activationEvents": [
     "onCommand:extension.newZettelLink",
     "onLanguage:markdown"
@@ -27,14 +29,30 @@
           "command": "extension.newZettelLink",
           "title": "New Zettel link"
       }
-  ],
-  "keybindings": [
+    ],
+    "keybindings": [
       {
           "command": "extension.newZettelLink",
           "key": "ctrl+shift+=",
           "mac": "ctrl+shift+="
       }
-  ]    
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Zettelkasten configuration",
+      "properties": {
+        "zettel.linkPrefix": {
+          "type": "string",
+          "default": "z",
+          "description": "Prefix used to distinguish Zettelkasten links"
+        },
+        "zettel.fileExtension": {
+          "type": "string",
+          "default": "ztk",
+          "description": "Zettelkasten file 'sub'-extension, will be added before .md"
+        }
+      }
+    }    
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",

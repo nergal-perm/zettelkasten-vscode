@@ -2,9 +2,10 @@
 
 const vscode = require('vscode');
 const path = require('path');
+const config = vscode.workspace.getConfiguration("zettel");
 
 // timestamp pattern taken here: https://stackoverflow.com/a/15967451
-const LINK_PATTERN = /\(z:\d{13}\)/g;
+const LINK_PATTERN = new RegExp("\(" + config.get('linkPrefix') + ":\\d{13}\)","g");
 
 let thisDocument = undefined;
 
@@ -19,8 +20,8 @@ function matchAll(pattern, text){
 }
 
 async function normalizeLink(link) {
-    const SEARCH_PATTERN = "**/" + thisDocument.getText(link.range).slice(3,-1) + "-*.ztk.md";
-    const NEW_FILE_NAME = thisDocument.getText(link.range).slice(3,-1) + "-New note.ztk.md";
+    const SEARCH_PATTERN = "**/" + getFileId(link) + "-*." + config.get("fileExtension") + ".md";
+    const NEW_FILE_NAME = getFileId(link) + "-New note." + config.get("fileExtension") + ".md";
     return await vscode.workspace.findFiles(SEARCH_PATTERN, "**/node_modules/**", 1).then(result => {
         if (result.length > 0 ) {
             link.target = result[0];
@@ -31,7 +32,11 @@ async function normalizeLink(link) {
     });
 }
 
-function provideDocumentLinks(document, token) {
+function getFileId(link) {
+    return thisDocument.getText(link.range).replace(config.get("linkPrefix"), "").slice(1,-1);
+}
+
+function provideDocumentLinks(document) {
     thisDocument = document;
     let results = [];
     for (const match of matchAll(LINK_PATTERN, document.getText())) {
@@ -43,7 +48,7 @@ function provideDocumentLinks(document, token) {
     return results;
 }
 
-function resolveDocumentLink(link, token) {
+function resolveDocumentLink(link) {
     return new Promise(resolve => {
         resolve(normalizeLink(link));
     });
