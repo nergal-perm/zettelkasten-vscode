@@ -1,5 +1,8 @@
-let ZtkLinkProvider = require('./documentLinkProvider');
-let vscode = require('vscode');
+"use strict";
+
+let ZtkLinkProvider = require("./documentLinkProvider");
+let MarkdownPreviewer = require ("./MarkdownPreviewer");
+let vscode = require("vscode");
 
 function activate(context) {
     let config = vscode.workspace.getConfiguration("zettel");
@@ -7,9 +10,9 @@ function activate(context) {
     let linkProvider = ZtkLinkProvider.getLinkProvider();
     context.subscriptions.push(linkProvider);
 
-    let timestampCommand = vscode.commands.registerCommand('extension.newZettelLink', function () {
+    let timestampCommand = vscode.commands.registerCommand("extension.newZettelLink", function () {
         let edits = [
-			vscode.TextEdit.insert(vscode.window.activeTextEditor.selection.active, '(' + config.get('linkPrefix') + ":" + Date.now() +')')
+			vscode.TextEdit.insert(vscode.window.activeTextEditor.selection.active, "(" + config.get("linkPrefix") + ":" + Date.now() +")")
 		];
 			
 		// Insert the text
@@ -20,15 +23,10 @@ function activate(context) {
     });
     context.subscriptions.push(timestampCommand);
 
-    return {
-        extendMarkdownIt(md) {
-            return md.use(require('markdown-it-sub'))
-                .use(require('markdown-it-sup'))
-                .use(require('markdown-it-container'), "tags")
-                .use(require('markdown-it-footnote'))
-                .use(require('markdown-it-katex'));
-        }
-    }
+    context.subscriptions.push(vscode.commands.registerCommand("extension.showPreviewNewTab", function () {
+        MarkdownPreviewer.previewCommand();
+    }));
+
 }
 exports.activate = activate;
 

@@ -18,6 +18,7 @@
     "icon": "icon.png",
     "activationEvents": [
         "onCommand:extension.newZettelLink",
+        "onCommand:extension.showPreviewNewTab",
         "onLanguage:markdown"
     ],
     "main": "./src/extension",
@@ -31,6 +32,10 @@
             {
                 "command": "extension.newZettelLink",
                 "title": "New Zettel link"
+            },
+            {
+              "command": "extension.showPreviewNewTab",
+              "title": "Zettelkasten: Open Preview to the &Side"
             }
         ],
         "keybindings": [
@@ -38,7 +43,13 @@
                 "command": "extension.newZettelLink",
                 "key": "ctrl+shift+=",
                 "mac": "ctrl+shift+="
-            }
+            },
+            {
+              "command": "extension.showPreviewNewTab",
+              "key": "ctrl+k v",
+              "mac": "cmd+k v",
+              "when": "editorTextFocus"
+          }            
         ],
         "configuration": {
             "type": "object",
@@ -53,6 +64,19 @@
                     "type": "string",
                     "default": "ztk",
                     "description": "Zettelkasten file 'sub'-extension, will be added before .md"
+                },
+                "zettel.infomap.blockLocatorRegex": {
+                  "type": "string",
+                  "default": "\\[\\]\\(include\\((z:\\d{13})\\)\\)",
+                  "description": "Regex to find infomap block includes"
+                },
+                "zettel.infomap.blockLocatorInvalidRegexMessageFormat": {
+                  "type": "string",
+                  "default": "!!! invalid Regular Expression of block:  \"%s\" !!!"                  
+                },
+                "zettel.infomap.blockLocatorFileReadFailureMessageFormat": {
+                  "type": "string",
+                  "default": "!!! failed to read file \"%s\" !!!"
                 }
             }
         }
