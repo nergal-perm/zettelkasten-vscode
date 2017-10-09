@@ -4,23 +4,10 @@ let vscode = require('vscode');
 function activate(context) {
     let config = vscode.workspace.getConfiguration("zettel");
 
-    let linkProvider = vscode.languages.registerDocumentLinkProvider(
-        ['markdown', { 
-            language: 'markdown', 
-            pattern: '**∕*.' + config.get('fileExtension') + '.md'}],
-        ZtkLinkProvider
-    );
+    let linkProvider = ZtkLinkProvider.getLinkProvider();
     context.subscriptions.push(linkProvider);
 
     let timestampCommand = vscode.commands.registerCommand('extension.newZettelLink', function () {
-    /*
-        let editor = vscode.window.activeTextEditor;
-        if (editor) {
-			// Get the selected text
-			let selection = editor.selection;
-			let selectedText = editor.document.getText(selection);
-		};
-    */
         let edits = [
 			vscode.TextEdit.insert(vscode.window.activeTextEditor.selection.active, '(' + config.get('linkPrefix') + ":" + Date.now() +')')
 		];

@@ -15,3 +15,7 @@ This will create a new link, like this:
 Here "z" - is the zettelkasten link prefix (you can change this by overwriting config property `zettel.linkPrefix`), and the numbers are the timestamp of link creation operation. Now, if you CTRL-click this link you will be prompted to create a new file with this identifier in your current workspace folder.
 
 If the file with such an identifier exists, CTRL-clicking on a link will open that file in a new editor tab.
+
+### Credits
+
+Logo image is created by [Aha-soft](http://www.aha-soft.com/) under [CC Attribution-Share Alike 4.0](http://creativecommons.org/licenses/by-sa/4.0/)

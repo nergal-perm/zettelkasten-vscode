@@ -1,76 +1,79 @@
 {
-  "name": "zettelkasten",
-  "displayName": "Zettelkasten",
-  "description": "Core Zettelkasten methods adapted for Visual Studio Code and Markdown",
-  "version": "0.2.0",
-  "publisher": "nergal-perm",
-  "license": "MIT",
-  "repository": "https://github.com/nergal-perm/zettelkasten-vscode",
-  "engines": {
-    "vscode": "^1.16.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "icon": "icon.png",
-  "activationEvents": [
-    "onCommand:extension.newZettelLink",
-    "onLanguage:markdown"
-  ],
-  "main": "./src/extension",
-  "contributes": {
-    "markdown.previewStyles": [
-      "./resources/katex.min.css",
-      "./resources/mystyles.css"
+    "name": "zettelkasten",
+    "displayName": "Zettelkasten",
+    "description": "Core Zettelkasten methods adapted for Visual Studio Code and Markdown",
+    "version": "0.2.1",
+    "publisher": "nergal-perm",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nergal-perm/zettelkasten-vscode"
+    },
+    "engines": {
+        "vscode": "^1.16.0"
+    },
+    "categories": [
+        "Other"
     ],
-    "markdown.markdownItPlugins": true,
-    "commands": [
-      {
-          "command": "extension.newZettelLink",
-          "title": "New Zettel link"
-      }
+    "icon": "icon.png",
+    "activationEvents": [
+        "onCommand:extension.newZettelLink",
+        "onLanguage:markdown"
     ],
-    "keybindings": [
-      {
-          "command": "extension.newZettelLink",
-          "key": "ctrl+shift+=",
-          "mac": "ctrl+shift+="
-      }
-    ],
-    "configuration": {
-      "type": "object",
-      "title": "Zettelkasten configuration",
-      "properties": {
-        "zettel.linkPrefix": {
-          "type": "string",
-          "default": "z",
-          "description": "Prefix used to distinguish Zettelkasten links"
-        },
-        "zettel.fileExtension": {
-          "type": "string",
-          "default": "ztk",
-          "description": "Zettelkasten file 'sub'-extension, will be added before .md"
+    "main": "./src/extension",
+    "contributes": {
+        "markdown.previewStyles": [
+            "./resources/katex.min.css",
+            "./resources/mystyles.css"
+        ],
+        "markdown.markdownItPlugins": true,
+        "commands": [
+            {
+                "command": "extension.newZettelLink",
+                "title": "New Zettel link"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.newZettelLink",
+                "key": "ctrl+shift+=",
+                "mac": "ctrl+shift+="
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "Zettelkasten configuration",
+            "properties": {
+                "zettel.linkPrefix": {
+                    "type": "string",
+                    "default": "z",
+                    "description": "Prefix used to distinguish Zettelkasten links"
+                },
+                "zettel.fileExtension": {
+                    "type": "string",
+                    "default": "ztk",
+                    "description": "Zettelkasten file 'sub'-extension, will be added before .md"
+                }
+            }
         }
-      }
-    }    
-  },
-  "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
-  },
-  "devDependencies": {
-    "typescript": "^2.5.2",
-    "vscode": "^1.1.5",
-    "mocha": "^3.5.0",
-    "eslint": "^4.6.1",
-    "@types/node": "^7.0.0",
-    "@types/mocha": "^2.2.42"
-  },
-  "dependencies": {
-    "markdown-it-container": "^2.0.0",
-    "markdown-it-footnote": "^3.0.1",
-    "markdown-it-katex": "^2.0.3",
-    "markdown-it-sub": "^1.0.0",
-    "markdown-it-sup": "^1.0.0"
-  }
+    },
+    "scripts": {
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5",
+        "mocha": "^3.5.0",
+        "eslint": "^4.6.1",
+        "@types/node": "^7.0.0",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "markdown-it-container": "^2.0.0",
+        "markdown-it-footnote": "^3.0.1",
+        "markdown-it-katex": "^2.0.3",
+        "markdown-it-sub": "^1.0.0",
+        "markdown-it-sup": "^1.0.0"
+    }
 }
