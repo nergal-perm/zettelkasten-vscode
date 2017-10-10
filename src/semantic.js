@@ -6,8 +6,13 @@ const fs = require("fs");
 const util = require("util");
 
 const encoding = "utf8";
+const config = vscode.workspace.getConfiguration("zettel");
 
-module.exports.replaceIncludes = function (input, hostFileName, settings) {
+function getFileId(link) {
+    return link.replace(config.get("linkPrefix"), "").slice(1);
+}
+
+module.exports.replaceIncludes = async function (input, hostFileName, settings) {
     const readFile = function(fileName) {
         try {
             return fs.readFileSync(fileName, encoding);
@@ -17,19 +22,25 @@ module.exports.replaceIncludes = function (input, hostFileName, settings) {
     }; //readFile
     const invalidRegexMessage = util.format(settings.blockLocatorInvalidRegexMessageFormat, settings.blockLocatorRegex);
     let result = input;
-    const replaceOne = function (regex) {
+    const replaceOne = async function (regex) {
         const match = regex.exec(result);
         if (!match) return false; 
         if (match.length != 2) { result = invalidRegexMessage; return false; }
-        const blockfileName = path.join(
-            path.dirname(hostFileName),
-            match[1]);
+        const SEARCH_PATTERN = "**/" + getFileId(match[1]) + "-*." + config.get("fileExtension") + ".md";
+        const blockfileName = await vscode.workspace.findFiles(SEARCH_PATTERN, "**/node_modules/**", 1).then(foundFiles => {
+            if (foundFiles.length > 0 ) {
+                return foundFiles[0].fsPath;
+            } else { 
+                return undefined; 
+            } 
+        });
         result = result.replace(match[0], readFile(blockfileName));
         return true;
     }; //replaceOne
     try {
         const regex = new RegExp(settings.blockLocatorRegex,"g");
-        do { } while (replaceOne(regex));
+        do {
+         } while (await replaceOne(regex));
         return result;
     } catch (ex) {
         return input;

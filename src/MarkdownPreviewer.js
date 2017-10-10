@@ -16,7 +16,7 @@ const settings = (function(){
     };
 }());
 
-const lazy = { markdownIt: (function () { 
+const markdownIt = (function () { 
     const extension = vscode.extensions.getExtension("Microsoft.vscode-markdown");
     if (!extension) return;
     const extensionPath = path.join(extension.extensionPath, "node_modules");
@@ -27,22 +27,19 @@ const lazy = { markdownIt: (function () {
         .use(require("markdown-it-footnote"))
         .use(require("markdown-it-katex"));
     return md;
-})()};
+})();
 
-const transcodeText = function (text, fileName) {
-    text = semantic.replaceIncludes(text, fileName, settings);
-    const result = lazy.markdownIt.render(text);
-    let style = "";
-    return util.format('<!DOCTYPE html><html><head><title>%s</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>' + 
-        '<body>%s</body></html>', fileName, result);
-};
-
-const previewOne = function (previewSourceTextEditor) {
+const transcodeText = function (previewSourceTextEditor) {
     if (!previewSourceTextEditor)
-        vscode.window.showErrorMessage("Open Markdown file (.md)");
+    vscode.window.showErrorMessage("Open Markdown file (.md)");
     const text = previewSourceTextEditor.document.getText();
-    return transcodeText(text, previewSourceTextEditor.document.fileName);
-} //previewOne
+    return semantic.replaceIncludes(text, previewSourceTextEditor.document.fileName, settings).then(readyText => {
+        const result = markdownIt.render(readyText);
+        let style = "";
+        return util.format('<!DOCTYPE html><html><head><title>%s</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>' + 
+            '<body>%s</body></html>', previewSourceTextEditor.document.fileName, result);
+    });
+};
 
 const previewUri = vscode.Uri.parse(util.format("%s://authority/%s", previewAuthority, previewAuthority));
 
@@ -52,7 +49,9 @@ const TextDocumentContentProvider = (function () {
     }
     TextDocumentContentProvider.prototype.provideTextDocumentContent = function (uri) {
         if (this.currentSourceTextEditor)
-            return previewOne(this.currentSourceTextEditor);
+            return transcodeText(this.currentSourceTextEditor).then(text => {
+                return(text);
+            });
     };
     Object.defineProperty(TextDocumentContentProvider.prototype, "onDidChange", {
         get: function () { return this.changeSourceHandler.event; }, enumerable: true, configurable: true
