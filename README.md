@@ -16,6 +16,10 @@ Here "z" - is the zettelkasten link prefix (you can change this by overwriting c
 
 If the file with such an identifier exists, CTRL-clicking on a link will open that file in a new editor tab.
 
+## Additional Markdown syntax
+
+This extension uses 
+
 ### Credits
 
 Logo image is created by [Aha-soft](http://www.aha-soft.com/) under [CC Attribution-Share Alike 4.0](http://creativecommons.org/licenses/by-sa/4.0/)

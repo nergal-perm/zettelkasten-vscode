@@ -4,6 +4,7 @@ const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
 const util = require("util");
+const stringReplaceAsync = require("string-replace-async");
 
 const encoding = "utf8";
 const config = vscode.workspace.getConfiguration("zettel");
@@ -20,28 +21,25 @@ module.exports.replaceIncludes = async function (input, hostFileName, settings) 
             return util.format(settings.blockLocatorFileReadFailureMessageFormat, fileName);
         } //exception
     }; //readFile
-    const invalidRegexMessage = util.format(settings.blockLocatorInvalidRegexMessageFormat, settings.blockLocatorRegex);
-    let result = input;
-    const replaceOne = async function (regex) {
-        const match = regex.exec(result);
-        if (!match) return false; 
-        if (match.length != 2) { result = invalidRegexMessage; return false; }
-        const SEARCH_PATTERN = "**/" + getFileId(match[1]) + "-*." + config.get("fileExtension") + ".md";
-        const blockfileName = await vscode.workspace.findFiles(SEARCH_PATTERN, "**/node_modules/**", 1).then(foundFiles => {
+    const replaceLink = async function (match, g1) {
+        const SEARCH_PATTERN = "**/" + getFileId(g1) + "-*." + config.get("fileExtension") + ".md";
+        const replacement = await vscode.workspace.findFiles(SEARCH_PATTERN, "**/node_modules/**", 1).then(foundFiles => {
             if (foundFiles.length > 0 ) {
-                return foundFiles[0].fsPath;
-            } else { 
-                return undefined; 
+                return readFile(foundFiles[0].fsPath);
+            } else {
+                return util.format("File %s not found", foundFiles[0].fsPath); 
             } 
         });
-        result = result.replace(match[0], readFile(blockfileName));
-        return true;
-    }; //replaceOne
+        return "\n\n" +  replacement + "\n\n";
+    };
+    const invalidRegexMessage = util.format(settings.blockLocatorInvalidRegexMessageFormat, settings.blockLocatorRegex);
     try {
         const regex = new RegExp(settings.blockLocatorRegex,"g");
-        do {
-         } while (await replaceOne(regex));
-        return result;
+        let processedString = "";
+        await stringReplaceAsync.seq(input, regex, replaceLink).then(result => {
+            processedString = result;
+        });
+        return processedString;
     } catch (ex) {
         return input;
     } //exception
