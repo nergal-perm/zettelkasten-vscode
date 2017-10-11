@@ -35,3 +35,5 @@ This extension uses some additional `markdown-it` plugins to provide new element
 ## Credits
 
 Logo image is created by [Aha-soft](http://www.aha-soft.com/) under [CC Attribution-Share Alike 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
+
+Markdown preview code, notes inclusion code is based on [Extensible Markdown Converter](https://github.com/SAKryukov/vscode-markdown-to-html) extension written and maintained by [Sergey Kryukov](http://www.sakryukov.org/)
