@@ -2,6 +2,8 @@
 
 This is a simple extension which provides means to create links between Markdown documents in a 'Zettelkasten' way.
 
+> IMPORTANT - this is a work in progress and is far from the product quality, so use it on your own risk and always make backups of your data.
+
 ## Usage
 
 To create a link to a new file press "Ctrl + Shift + P / F1" and type "zettel", then choose command "New Zettel link" and press "Enter". Or you can use keyboard shortcut "Ctrl + Shift + =".
