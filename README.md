@@ -18,8 +18,18 @@ If the file with such an identifier exists, CTRL-clicking on a link will open th
 
 ## Additional Markdown syntax
 
-This extension uses 
+This extension uses some additional `markdown-it` plugins to provide new elements, such as subscript or Latex math formulas. Here are the examples:
 
-### Credits
+![](./extended-md.png)
+
+### Used markdown plugins
+
+* [markdown-it-sup](https://www.npmjs.com/package/markdown-it-sup)
+* [markdown-it-sub](https://www.npmjs.com/package/markdown-it-sub) 
+* [markdown-it-footnote](https://www.npmjs.com/package/markdown-it-footnote)
+* [markdown-it-container](https://www.npmjs.com/package/markdown-it-container)
+* [markdown-it-katex](https://www.npmjs.com/package/markdown-it-katex)
+
+## Credits
 
 Logo image is created by [Aha-soft](http://www.aha-soft.com/) under [CC Attribution-Share Alike 4.0](http://creativecommons.org/licenses/by-sa/4.0/)
