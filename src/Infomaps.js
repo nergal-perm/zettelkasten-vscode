@@ -42,7 +42,8 @@ function convertLinkToRow(link) {
     if (/^\[\]/gi.test(link)) {
         link = link.replace("[]", "[Title of a note]");
     }
-    return link.replace(/^\[(.*?)\](.*)/gim, '<tr><td class="infomap-label">$1</td><td>[]$2</td></tr>');
+    return link.replace(/^\[(.*?)\](.*)/gim, '<tr><td class="infomap label">$1</td><td class="infomap content">' + 
+        '<div class="content">[]$2<div class="bottom-hr"><hr /></div></div></td></tr>');
 }
 
 module.exports = {

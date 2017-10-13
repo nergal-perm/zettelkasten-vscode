@@ -35,6 +35,10 @@ suite("Infomaps Tests", function() {
         "[](include(z:1234567890127))"
     ];
 
+    const ROW_START = '<tr><td class="infomap label">';
+    const ROW_MIDDLE = '</td><td class="infomap content"><div class="content">';
+    const ROW_END = '<div class="bottom-hr"><hr /></div></div></td></tr>';
+
     test("Find a single container", function() {
         let containers = Infomaps._containers(textSingleContainer.split("\n"));
         assert.equal(containers.length, 1);
@@ -57,11 +61,11 @@ suite("Infomaps Tests", function() {
         let actual = Infomaps._containerToTable(container, textSingleContainer.split("\n")).join("\n");
         let expected = [
             '<table class="infomap">', 
-            '<tr><td class="infomap-label">Summary title</td><td>[](include(z:1234567890123))</td></tr>',
-            '<tr><td class="infomap-label">1st block</td><td>[](include(z:1234567890124))</td></tr>',
-            '<tr><td class="infomap-label">2nd block</td><td>[](include(z:1234567890125))</td></tr>',
-            '<tr><td class="infomap-label">3rd block</td><td>[](include(z:1234567890126))</td></tr>',
-            '<tr><td class="infomap-label">4th block</td><td>[](include(z:1234567890127))</td></tr>',
+            ROW_START + 'Summary title' + ROW_MIDDLE + '[](include(z:1234567890123))' + ROW_END,
+            ROW_START + '1st block' + ROW_MIDDLE + '[](include(z:1234567890124))' + ROW_END,
+            ROW_START + '2nd block' + ROW_MIDDLE + '[](include(z:1234567890125))' + ROW_END,
+            ROW_START + '3rd block' + ROW_MIDDLE + '[](include(z:1234567890126))' + ROW_END,
+            ROW_START + '4th block' + ROW_MIDDLE + '[](include(z:1234567890127))' + ROW_END,
             '</table>'].join("\n");
         assert.equal(actual, expected);
     });
@@ -71,11 +75,11 @@ suite("Infomaps Tests", function() {
         let expected  = [
             "# Header",
             '<table class="infomap">',
-            '<tr><td class="infomap-label">Summary title</td><td>[](include(z:1234567890123))</td></tr>',
+            ROW_START + 'Summary title' + ROW_MIDDLE + '[](include(z:1234567890123))' + ROW_END,
             "</table>",
             "## Subheader",
             '<table class="infomap">',
-            '<tr><td class="infomap-label">1st block</td><td>[](include(z:1234567890124))</td></tr>',
+            ROW_START + '1st block' + ROW_MIDDLE + '[](include(z:1234567890124))' + ROW_END,
             "</table>",
             "### Footer"
         ].join("\n");
@@ -88,9 +92,9 @@ suite("Infomaps Tests", function() {
             array[index] = Infomaps._convertLinkToRow(link);
         });
         let expected = [
-            '<tr><td class="infomap-label">Summary title</td><td>[](include(z:1234567890123))</td></tr>',
-            '<tr><td class="infomap-label">1st block</td><td>[](include(z:1234567890124))</td></tr>',
-            '<tr><td class="infomap-label">Title of a note</td><td>[](include(z:1234567890127))</td></tr>'
+            ROW_START + 'Summary title' + ROW_MIDDLE + '[](include(z:1234567890123))' + ROW_END,
+            ROW_START + '1st block' + ROW_MIDDLE + '[](include(z:1234567890124))' + ROW_END,
+            ROW_START + 'Title of a note' + ROW_MIDDLE + '[](include(z:1234567890127))' + ROW_END,
         ];
         assert.equal(links.join("\n"), expected.join("\n"));
     });
