@@ -3,6 +3,8 @@
 const vscode = require("vscode");
 const path = require("path");
 const util = require("util");
+
+const Infomaps = require('./Infomaps');
 const semantic = require("./semantic");
 
 const previewAuthority = "zettelkasten-markdown-preview";
@@ -20,7 +22,12 @@ const markdownIt = (function () {
     const extension = vscode.extensions.getExtension("Microsoft.vscode-markdown");
     if (!extension) return;
     const extensionPath = path.join(extension.extensionPath, "node_modules");
-    let md = require(path.join(extensionPath, "markdown-it"))();
+    let md = require(path.join(extensionPath, "markdown-it"))({
+        html: true,
+        breaks: true,
+        linkify: true,
+        typographer: true
+    });
     md.use(require("markdown-it-sub"))
         .use(require("markdown-it-sup"))
         .use(require("markdown-it-container"), "tags")
@@ -32,9 +39,15 @@ const markdownIt = (function () {
 const transcodeText = async function (previewSourceTextEditor) {
     if (!previewSourceTextEditor)
     vscode.window.showErrorMessage("Open Markdown file (.md)");
-    const text = previewSourceTextEditor.document.getText();
-    let readyText = await semantic.replaceIncludes(text, previewSourceTextEditor.document.fileName, settings)
-    const result = markdownIt.render(readyText);
+    let text = previewSourceTextEditor.document.getText();
+
+    // source text manipulations
+    //  - find and transform all the infomaps regions (no nesting and title finding yet)
+    text = Infomaps.createInfomaps(text);
+    //  - replace all the includes
+    text = await semantic.replaceIncludes(text, previewSourceTextEditor.document.fileName, settings)
+    
+    const result = markdownIt.render(text);
     let style = getStyles();
     return util.format('<!DOCTYPE html><html><head><title>%s</title>' + style +
         '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>' + 
