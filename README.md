@@ -49,7 +49,7 @@ Use of this section provides the capability to combine many other notes into the
 
 This extension uses some additional `markdown-it` plugins to provide new elements, such as subscript or Latex math formulas. Here are the examples:
 
-![](./extended-md.png)
+![](https://github.com/nergal-perm/zettelkasten-vscode/raw/master/extended-md.png)
 
 ### Used markdown plugins
 
