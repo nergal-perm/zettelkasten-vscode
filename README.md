@@ -4,7 +4,7 @@ This is a simple extension which provides means to create links between Markdown
 
 > IMPORTANT - this is a work in progress and is far from the product quality, so use it on your own risk and always make backups of your data.
 
-## Usage
+## Creating links to notes
 
 To create a link to a new file press "Ctrl + Shift + P / F1" and type "zettel", then choose command "New Zettel link" and press "Enter". Or you can use keyboard shortcut "Ctrl + Shift + =".
 
@@ -17,6 +17,33 @@ This will create a new link, like this:
 Here "z" - is the zettelkasten link prefix (you can change this by overwriting config property `zettel.linkPrefix`), and the numbers are the timestamp of link creation operation. Now, if you CTRL-click this link you will be prompted to create a new file with this identifier in your current workspace folder.
 
 If the file with such an identifier exists, CTRL-clicking on a link will open that file in a new editor tab.
+
+## Creating sections inside a note
+
+Currently extension supports two section types: meta section and infomap section. To create a section, use following syntax:
+
+```
+:::<section_name>
+<section_content>
+:::
+```
+
+### Metadata section
+
+Metadata section can contain useful information about the note itself, like author's name, source link, tags, etc. It's section name is `meta` and this section doesn't render in the markdown preview pane. 
+
+### Infomap section
+
+Use of this section provides the capability to combine many other notes into the current one and to present them as a formatted two-column table with note titles in the left column and notes content in the right one. Here is an example of such a section:
+
+```
+:::infomap
+[Note title 1](include(z:1507952069244))
+[Some additional info](include(z:1507952081976))
+[And here is some more](include(z:1507952107484))
+:::
+```
+
 
 ## Additional Markdown syntax
 

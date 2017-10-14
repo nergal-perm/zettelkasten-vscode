@@ -5,13 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Roadmap
-- Infomaps creation
 - Diagrams inside notes (water logic)
 
-## Version 0.3.0 (unreleased)
+## Version 0.3.0
 
 ### Added
 - The ability to include other notes into the current one and to preview the result inside VS Code
+- The use of sections inside the document:
+  - `meta` section can contain information about the note itself (author, tags and so on) and it's not rendered in the Markdown preview;
+  - `infomap` section should contain other notes inclusions and is rendered as a table with titles in the left column (label) and included content in the right column
 
 ### Changed
 - `README.md` now includes additional `markdown-it` plugins list and give credit to [Sergey Kryukov](http://www.sakryukov.org/)

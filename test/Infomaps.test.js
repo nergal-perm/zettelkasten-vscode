@@ -8,7 +8,7 @@ suite("Infomaps Tests", function() {
         "This is a huge amount of text",
         "written especially for testing",
         "",
-        "::: infomap",
+        ":::infomap",
         "[Summary title](include(z:1234567890123))",
         "[1st block](include(z:1234567890124))",
         "[2nd block](include(z:1234567890125))",
@@ -19,11 +19,11 @@ suite("Infomaps Tests", function() {
 
     let textTwoContainers = [
         "# Header",
-        "::: infomap",
+        ":::infomap",
         "[Summary title](include(z:1234567890123))",
         ":::",
         "## Subheader",
-        "::: infomap",
+        ":::infomap",
         "[1st block](include(z:1234567890124))",
         ":::",
         "### Footer"

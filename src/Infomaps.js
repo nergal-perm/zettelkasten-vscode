@@ -8,7 +8,7 @@ function findAllContainers(text) {
     let containers = [];
     let container = {};
     for (let i=0;i<text.length;i++) {
-        if((/^::: infomap\s*/gi).test(text[i])) {
+        if((/^:::infomap\s*/gi).test(text[i])) {
             container.startLine = i;
         } else if ((/^:::\s*/gi).test(text[i]) && container.startLine ) {
             container.endLine = i;
