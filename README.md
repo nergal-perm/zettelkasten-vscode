@@ -36,13 +36,7 @@ Metadata section can contain useful information about the note itself, like auth
 
 Use of this section provides the capability to combine many other notes into the current one and to present them as a formatted two-column table with note titles in the left column and notes content in the right one. Here is an example of such a section:
 
-```
-:::infomap
-[Note title 1](include(z:1507952069244))
-[Some additional info](include(z:1507952081976))
-[And here is some more](include(z:1507952107484))
-:::
-```
+![](https://github.com/nergal-perm/zettelkasten-vscode/raw/master/infomap-section.png)
 
 
 ## Additional Markdown syntax
