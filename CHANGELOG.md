@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Roadmap
 - Diagrams inside notes (water logic)
 
+## Version 0.3.2
+
+### Added
+- Infomap section with no ending markers will last till the last line of a note
+
+### Fixed
+- Infomap section beginning in the first line of a note couldn't get rendered (Issue #1)
+- README.md - Example code illustrating `infomap`'s usage was replaced by an image, because all of the links inside were processed by the Visual Studio Code publish tool
+
 ## Version 0.3.0
 
 ### Added
@@ -16,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - `infomap` section should contain other notes inclusions and is rendered as a table with titles in the left column (label) and included content in the right column
 
 ### Changed
-- `README.md` now includes additional `markdown-it` plugins list and give credit to [Sergey Kryukov](http://www.sakryukov.org/)
+- `README.md` now includes additional `markdown-it` plugins list and gives credit to [Sergey Kryukov](http://www.sakryukov.org/)
 
 ## Version 0.2.1
 

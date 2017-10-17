@@ -29,6 +29,19 @@ suite("Infomaps Tests", function() {
         "### Footer"
     ].join("\n");
 
+    let containerFromTheStart = [
+        ":::infomap",
+        "[Summary title](include(z:1234567890123))",
+        ":::",
+        "### Footer"
+    ].join("\n");
+
+    let containerTillTheEnd = [
+        "### Footer",
+        ":::infomap",
+        "[Summary title](include(z:1234567890123))"
+    ].join("\n");
+
     let links = [
         "[Summary title](include(z:1234567890123))",
         "[1st block](include(z:1234567890124))",
@@ -71,7 +84,6 @@ suite("Infomaps Tests", function() {
     });
 
     test("Wrap two containers in tables", function() {
-        let containers = Infomaps._containers(textTwoContainers.split("\n"));
         let expected  = [
             "# Header",
             '<table class="infomap">',
@@ -99,4 +111,26 @@ suite("Infomaps Tests", function() {
         assert.equal(links.join("\n"), expected.join("\n"));
     });
     
+    test("Convert container beginning from the first line", function() {
+        let expected = [
+            '<table class="infomap">',
+            ROW_START + 'Summary title' + ROW_MIDDLE + '[](include(z:1234567890123))' + ROW_END,
+            "</table>",
+            "### Footer"
+        ].join("\n");
+        let actual = Infomaps._containersToTable(containerFromTheStart).join("\n");
+        assert.equal(actual, expected);
+    });
+
+    test("Convert container ending with the file last line instead of marker", function() {
+        let expected = [
+            "### Footer",
+            '<table class="infomap">',
+            ROW_START + 'Summary title' + ROW_MIDDLE + '[](include(z:1234567890123))' + ROW_END,
+            "</table>"
+        ].join("\n");
+        let actual = Infomaps._containersToTable(containerTillTheEnd).join("\n");
+        assert.equal(actual, expected);
+    });
+
 });

@@ -10,12 +10,16 @@ function findAllContainers(text) {
     for (let i=0;i<text.length;i++) {
         if((/^:::infomap\s*/gi).test(text[i])) {
             container.startLine = i;
-        } else if ((/^:::\s*/gi).test(text[i]) && container.startLine ) {
+        } else if ((/^:::\s*/gi).test(text[i]) && !isNaN(container.startLine) ) {
             container.endLine = i;
             containers.push(container);
             container = {};
         }
     }
+    if (!isNaN(container.startLine)) {
+        container.endLine = text.length;
+        containers.push(container);
+    };
     return containers;
 }
 
@@ -24,7 +28,11 @@ function convertToTable(container, textStrings) {
     for (let i=container.startLine+1;i<container.endLine;i++) {
         textStrings[i] = convertLinkToRow(textStrings[i]);
     }
-    textStrings[container.endLine] = '</table>';
+    if (container.endLine == textStrings.length) {
+        textStrings.push('</table>');
+    } else {
+        textStrings[container.endLine] = '</table>';
+    }
     return textStrings.slice(container.startLine, container.endLine + 1);
 }
 
